@@ -21,3 +21,4 @@ urlpatterns = [
     path("livestock/", include('livestock.urls'))
 ] #e.g. decorator in flask if someone goes here, connect them to these routes.
 
+handler404 = 'livestock.views.not_found_404'

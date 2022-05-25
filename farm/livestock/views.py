@@ -66,3 +66,6 @@ def shop(request):
     <h1>Shop</h1>
     <p>Buy our delicious steaks</p>
     """)
+
+def not_found_404(request, exception):
+    return render(request, '404.html')
