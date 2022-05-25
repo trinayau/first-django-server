@@ -1,14 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from .models import Animal
 
 # Create your views here.
 
-# Dummy data - will be removed
-cow_list = [
-    {"name": "Daisy", "age": 3, "id": 1},
-    {"name": "Cow", "age": 1, "id": 2},
-    {"name": "Lucy", "age": 7, "id": 3}
-]
+# # Dummy data - will be removed
+# cow_list = [
+#     {"name": "Daisy", "age": 3, "id": 1},
+#     {"name": "Cow", "age": 1, "id": 2},
+#     {"name": "Lucy", "age": 7, "id": 3}
+# ]
 
 def index(request):
 #index view thar returns html
@@ -26,7 +27,7 @@ def about(request):
 def cows(request):
     #define data here with a key of cows and a value of a
     data = {
-        "cows": cow_list
+        "cows": Animal.objects.filter(species=3)
     }
     return render(request, 'cows.html', data) #render takes 3 args, request + name of html folder, data
     # return HttpResponse(f"""
@@ -36,7 +37,8 @@ def cows(request):
 
 def cow(request, id):
     #filter takes in func and thing to filter
-    data = {"cow": list(filter(lambda c: c["id"] == id, cow_list))[0]}
+    data={"cow": get_object_or_404(Animal, pk=id)} #finding primary key matching id
+    # data = {"cow": list(filter(lambda c: c["id"] == id, cow_list))[0]}
     return render(request, 'cow.html', data)
 
 def all(request):
