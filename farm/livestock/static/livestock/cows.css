@@ -1,0 +1,10 @@
+
+@counter-style single-emoji {
+  system: cyclic;
+  symbols: "\1F404"; // unicode code point
+  suffix: " ";
+}
+
+.single-counter-rule {
+  list-style-type: single-emoji;
+}

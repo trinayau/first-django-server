@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Animal
 
 # Create your views here.
@@ -66,6 +66,40 @@ def shop(request):
     <h1>Shop</h1>
     <p>Buy our delicious steaks</p>
     """)
+
+def list_animals(request):
+    data = {
+        "animals": [animal.to_dict() for animal in Animal.objects.all()]
+    }
+    return JsonResponse(data)
+
+def list_cows(request):
+    data = {
+        # "cows": list(Animal.to_dict(c) for c in Animal.objects.filter(species=3)),
+        #for each animal in list of animals from db
+        # convert it to a dictionary
+        #put the dictionary into a list
+        "cows": [animal.to_dict() for animal in Animal.objects.filter(species=3)]
+    }
+    return JsonResponse(data)
+
+def get_cow(request, id):
+    data = {
+        "cow": get_object_or_404(Animal.objects.filter(species=3), pk=id).to_dict()
+    }
+    return JsonResponse(data)
+
+def list_alligators(request):
+    data = {
+        "alligators": [animal.to_dict() for animal in Animal.objects.filter(species=2)]
+    }
+    return JsonResponse(data)
+
+def get_alligator(request, id):
+    data = {
+        "alligator": get_object_or_404(Animal.objects.filter(species=2), pk=id).to_dict()
+    }
+    return JsonResponse(data)
 
 def not_found_404(request, exception):
     return render(request, '404.html')

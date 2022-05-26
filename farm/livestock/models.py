@@ -26,8 +26,14 @@ class Animal(models.Model):
     
     def __str__(self):
         return f"{self.name}, a {self.species.name}"
-
-
+    
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "species": self.species.name,
+            "age": self.age,
+            "hopes_and_dreams": self.hopes_and_dreams
+        }
 
 
 
